@@ -19,12 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private PlatziUserDetailsService platziUserDetailsService;
-
     @Autowired
     private JWTUtil jwtUtil;
 

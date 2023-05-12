@@ -21,7 +21,6 @@ public class JwtFilterRequest extends OncePerRequestFilter {
 
     @Autowired
     private JWTUtil jwtUtil;
-
     @Autowired
     private PlatziUserDetailsService platziUserDetailsService;
 
@@ -33,18 +32,16 @@ public class JwtFilterRequest extends OncePerRequestFilter {
             String jwt = authorizationHeader.substring(7);
             String username = jwtUtil.extractUsername(jwt);
 
-            if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDetails = platziUserDetailsService.loadUserByUsername(username);
 
                 if (jwtUtil.validateToken(jwt, userDetails)){
-                    UsernamePasswordAuthenticationToken authToken =
-                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                            SecurityContextHolder.getContext().setAuthentication(authToken);
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
-
         }
 
         filterChain.doFilter(request, response);

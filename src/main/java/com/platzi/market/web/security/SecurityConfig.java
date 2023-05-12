@@ -14,10 +14,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private PlatziUserDetailsService platziUserDetailsService;
-
     @Autowired
     private JwtFilterRequest jwtFilterRequest;
 
@@ -33,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Override
